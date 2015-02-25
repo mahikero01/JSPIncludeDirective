@@ -7,6 +7,17 @@
 <title>Welcome to the World Manager</title>
 </head>
 <body>
-
+	<%@ include file="header.jsp" %>
+	<table style="width:100%">
+		<tr>
+			<td style="width:25%; height:80%" valign="top">
+				<%@ include file="navbar.jsp" %>
+			</td>
+			<td style="width:25%; height:80%">
+				<h1>Content goes here</h1>
+			</td>
+		</tr>
+	</table>
+	<jsp:include page="footer.jsp"/>
 </body>
 </html>
