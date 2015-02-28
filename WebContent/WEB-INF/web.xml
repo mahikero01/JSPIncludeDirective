@@ -31,7 +31,7 @@
   
   <error-page>
   	<error-code>500</error-code>
-  	<location>/actionNotAllowed.jsp</location>
+  	<location>/errorHandler.jsp</location>
   </error-page>
   
   <welcome-file-list>
