@@ -9,12 +9,6 @@
 <title>Bad Page</title>
 </head>
 <body>
-	<% 
-		if (request.getParameter("notSetYet") == null)
-		{
-			throw new IllegalArgumentException("Not Set Yet is " 
-				+ "Not Yet Set As Expected!");
-		}
-	%>
+	<jsp:forward page="/simulateException.do" />
 </body>
 </html>
