@@ -18,9 +18,8 @@
 			</td>
 			<td style="width:75%;height:80%;">
 				<h1>An Error has occurred!</h1><br>
-				<%
-					out.println(exception.getMessage());
-				%>
+
+				${pageContext.exception.message}
 			</td>
 		</tr>
 	</table>
