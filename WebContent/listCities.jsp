@@ -50,9 +50,9 @@
 									+ "<tr><td>ID</td><td>NAME</td><td>COUNTRY_CODE</td>"
 									+ "<td>DISTRICT</td><td>POPULATION</td></tr>");
 						
-						//TRUE MVC ERROR: the query should NOT be on the JSP page...
+						
 						String query = DBWorldQueries.getCitiesByDistrictByPopulation();
-						//TRUE MVC ERROR: neither should creation of the result set...
+						
 						ResultSet rs = dbm.ExecuteResultSet(query);
 						while (rs.next())
 						{
