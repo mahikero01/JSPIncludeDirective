@@ -5,6 +5,7 @@ import java.io.IOException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -31,24 +32,56 @@ public class LoginUser extends HttpServlet {
 		String uid = request.getParameter("uid");
 		String pwd = request.getParameter("pwd");
 		
+		//simulate login
 		HttpSession s = request.getSession();
 		s.setAttribute("uid", uid);
 		s.setAttribute("pwd", pwd);
+		int authLevel = 1;
+		s.setAttribute("authlevel", authLevel);
 		
-		String destination = "showUserCredentials.jsp";
-		if (request.getParameter("noSession") != null)
+		//redirect
+		String destination = "listCities.jsp";
+		if (request.getAttribute("dest") != null)
 		{
-			String noSession = request.getParameter("noSession");
-			if (noSession.equalsIgnoreCase("ON"))
+			destination = (String)request.getAttribute("dest");
+		}
+		if (destination != null && destination.equals("listcities"))
+		{
+			destination = "listCities.jsp";
+		}
+		
+		if (request.getParameter("rememberMe") != null)
+		{
+			String rememberMe = request.getParameter("rememberMe");
+			if (rememberMe.equalsIgnoreCase("ON"))
 			{
-				destination = "showUserCredentials2.jsp";
+				//we also want to store the information in a cookie
+				//for reuse later:
+				int cookieLife = 3600*24*7; //7 days
+				Cookie uidCook = new Cookie("credentials_uid",uid);
+				uidCook.setMaxAge(cookieLife);  //7 days
+				response.addCookie(uidCook);
+				Cookie pwdCook = new Cookie("credentials_pwd",pwd);
+				uidCook.setMaxAge(cookieLife);  //7 days
+				response.addCookie(pwdCook);
 			}
 		}
 		
-		//if use request dispatcher place a / in front of url
-		//RequestDispatcher rd = request.getRequestDispatcher("/" + destination);
-		//rd.forward(request, response);
-		response.sendRedirect(response.encodeRedirectURL(destination));
+		//redirect
+		if (authLevel < 1 || uid == null || uid == "")
+		{
+			//send back to calling page or forward to 
+			//unauthorized notification
+			response.sendRedirect(
+					response.encodeRedirectURL("login.jsp"));
+			
+		}
+		else
+		{
+			//if use request dispatcher place a / in front of url
+			//RequestDispatcher rd = request.getRequestDispatcher("/" + destination);
+			//rd.forward(request, response);
+			response.sendRedirect(response.encodeRedirectURL(destination));
+		}
 	}
-
 }
